@@ -12,8 +12,8 @@ wind_offset = random.randint(-1, 1)
 counter = 0
 
 #getting graphic image
-AnimeChar = pygame.image.load('ManSil.png')
-AnimeRect = pygame.Rect(windowWidth/3-200, windowHeight/2-300,400,1099)
+Char = pygame.image.load('ManSil.png')
+CharRect = pygame.Rect(windowWidth/3-200, windowHeight/2-300,400,1099)
 
 
 #Initialize pygame and other necesary items
@@ -59,13 +59,13 @@ while True:
     windowDisplay.fill(BackgroundColour)
 
     #Set graphic in the background
-    #windowDisplay.blit(AnimeChar, AnimeRect)
+    #windowDisplay.blit(Char, CharRect)
     count = 0
     #Set the rain to fall down setting the character in the middle
     for rain in rainDrops:
         count += 1
         if count == MaxRain/2:
-            windowDisplay.blit(AnimeChar, AnimeRect)
+            windowDisplay.blit(Char, CharRect)
         rain['rect'].top += fallSpeed*rain['rect'].height
         rain['rect'].left += wind_offset*rain['z']
         pygame.draw.rect(windowDisplay, rainColour, rain['rect'])
