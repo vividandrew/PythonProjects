@@ -18,6 +18,7 @@ CharRect = pygame.Rect(windowWidth/3-200, windowHeight/2-300,400,1099)
 
 #Initialize pygame and other necesary items
 pygame.init()
+pygame.display.set_caption("Raining Simulation")
 mainClock = pygame.time.Clock()
 windowDisplay = pygame.display.set_mode((windowWidth, windowHeight))
 pygame.mixer.music.load('Background.mp3')
