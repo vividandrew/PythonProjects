@@ -30,7 +30,6 @@ for i in range(MaxRain):
     rain = {'z': z, 'rect': pygame.Rect(random.randint(-1* (windowWidth/3), windowWidth+ (windowWidth/3)), 
                                                                 random.randint(-1 * windowHeight, 0), z*0.2, z*3)}
     rainDrops.append(rain)
-print rainDrops[0]['z']
 
 #Set up colours needed
 rainColour = (55, 0, 255)
