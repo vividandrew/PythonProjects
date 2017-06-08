@@ -232,24 +232,18 @@ def playGame(diff):
         if lPaddle.colliderect(pong):
             pongLeft = False
             pongRight = True
-            if pong.y - lPaddle.y < 15:
-                if pong.y - lPaddle.y <= 0:
-                    pongUD = pongUD + (pong.y - lPaddle.y) / 10
-                else:
-                    pongUD = pongUD - (pong.y - lPaddle.y)/10
-            if pong.y - lPaddle.y > 35:
-                pongUD = pongUD + (pong.y - lPaddle.y)/10
+            if (pong.y + 10) - lPaddle.y <= 15:
+                pongUD = pongUD - (((pong.y + 10) - lPaddle.y)*0.5)/2
+            if (pong.y + 10) - lPaddle.y >= 35:
+                pongUD = pongUD - ((((pong.y + 10) - lPaddle.y)*0.5)-35)/2
 
         if rPaddle.colliderect(pong):
             pongLeft = True
             pongRight = False
-            if pong.y - rPaddle.y < 15:
-                if pong.y - rPaddle.y <= 0:
-                    pongUD = pongUD + (pong.y - rPaddle.y) / 10
-                else:
-                    pongUD = pongUD - (pong.y - rPaddle.y)/10
-            if pong.y - rPaddle.y > 35:
-                pongUD = pongUD + (pong.y - rPaddle.y)/10
+            if (pong.y + 10) - rPaddle.y <= 15:
+                pongUD = pongUD - (((pong.y + 10) - rPaddle.y)*0.5)/2
+            if (pong.y + 10) - lPaddle.y >= 35:
+                pongUD = pongUD - ((((pong.y + 10) - rPaddle.y)*0.5)-35)/2
 
         if pong.top < 4:
             pongUD = -pongUD
@@ -303,6 +297,9 @@ def playGame(diff):
         scoreBoard = text.get_rect()
         scoreBoard.centery = 50
         scoreBoard.centerx = windowWidth/2
+
+        #testRect = pygame.Rect(0, lPaddle.y, windowWidth/3, 1)
+        #pygame.draw.rect(windowSurface,WHITE, testRect)
 
         windowSurface.blit(text, scoreBoard)
 
