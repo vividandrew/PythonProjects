@@ -8,7 +8,6 @@ windowWidth = 640
 windowHeight = 480
 mainClock = pygame.time.Clock()
 FPSLimit = 60
-#CPUdiff = 6
 
 # Set some colours
 BLACK = (0, 0, 0)
@@ -263,15 +262,18 @@ def playGame(diff):
         pongOL.top = pong.y - 2
 
         # Paddle movement controls
-        #if moveUP and lPaddle.centery > 0:
-            #lPaddle.top -= pSpeed
-        #if moveDOWN and lPaddle.centery < windowHeight:
-            #lPaddle.top += pSpeed
+        if moveUP and lPaddle.centery > 0:
+            lPaddle.top -= pSpeed
+        if moveDOWN and lPaddle.centery < windowHeight:
+            lPaddle.top += pSpeed
 
+        '''
+        #Let the computer control the Left paddle also, for testing
         if pong.y - lPaddle.top - 20 < 0:
             lPaddle.top -= cSpeed
         if pong.y - rPaddle.top - 20 > 0:
             lPaddle.top += cSpeed
+        '''
 
         if pong.y - rPaddle.top - 20 < 0:
             rPaddle.top -= cSpeed
