@@ -179,7 +179,8 @@ def playGame(diff):
     pong.y = windowHeight / 2 - 5
     lPaddle.top = windowHeight/2-25
     rPaddle.top = windowHeight/2-25
-
+    pongy = 0
+    pongstuck = 0
     # some essential game variables
     cSpeed = diff
     pSpeed = 6
@@ -234,8 +235,10 @@ def playGame(diff):
             pongRight = True
             if (pong.y + 10) - lPaddle.y <= 15:
                 pongUD = pongUD - (((pong.y + 10) - lPaddle.y)*0.5)/2
+                print((((pong.y + 10) - lPaddle.y)*0.5)/2)
             if (pong.y + 10) - lPaddle.y >= 35:
                 pongUD = pongUD - ((((pong.y + 10) - lPaddle.y)*0.5)-35)/2
+                print(((((pong.y + 10) - lPaddle.y)*0.5)-35)/2)
 
         if rPaddle.colliderect(pong):
             pongLeft = True
@@ -245,9 +248,9 @@ def playGame(diff):
             if (pong.y + 10) - rPaddle.y >= 35:
                 pongUD = pongUD - ((((pong.y + 10) - rPaddle.y)*0.5)-35)/2
 
-        if pong.top < 4:
+        if pong.top < 4 + pongSpeed:
             pongUD = -pongUD
-        if pong.top > windowHeight - (pong.height+4):
+        if pong.top > windowHeight - (pong.height + pongSpeed + 4):
             pongUD = -pongUD
         pong.top += pongUD
 
@@ -307,6 +310,7 @@ def playGame(diff):
         pygame.display.update()
         mainClock.tick(FPSLimit)
 
+        pongy = pong.y
 # Main Menu Screen
 def mainMenu(mx = 0, my = 0, CPUdiff = 6):
     mouseClicked = False
