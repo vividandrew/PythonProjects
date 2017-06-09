@@ -242,7 +242,7 @@ def playGame(diff):
             pongRight = False
             if (pong.y + 10) - rPaddle.y <= 15:
                 pongUD = pongUD - (((pong.y + 10) - rPaddle.y)*0.5)/2
-            if (pong.y + 10) - lPaddle.y >= 35:
+            if (pong.y + 10) - rPaddle.y >= 35:
                 pongUD = pongUD - ((((pong.y + 10) - rPaddle.y)*0.5)-35)/2
 
         if pong.top < 4:
