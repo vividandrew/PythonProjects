@@ -187,6 +187,7 @@ def playGame(diff):
     moveDOWN = False
     cScore = 0
     pScore = 0
+    pStuck = 0
 
     # Background Objects
     tBorder = pygame.Rect(0, 0, windowWidth, 4)
@@ -249,7 +250,8 @@ def playGame(diff):
             pongUD = -pongUD
         if pong.top > windowHeight - (pong.height + pongSpeed + 4):
             pongUD = -pongUD
-        pong.top += pongUD
+        pong.top += int(pongUD)
+
 
         if pongLeft:
             pong.left -= pongSpeed
@@ -261,10 +263,15 @@ def playGame(diff):
         pongOL.top = pong.y - 2
 
         # Paddle movement controls
-        if moveUP and lPaddle.centery > 0:
-            lPaddle.top -= pSpeed
-        if moveDOWN and lPaddle.centery < windowHeight:
-            lPaddle.top += pSpeed
+        #if moveUP and lPaddle.centery > 0:
+            #lPaddle.top -= pSpeed
+        #if moveDOWN and lPaddle.centery < windowHeight:
+            #lPaddle.top += pSpeed
+
+        if pong.y - lPaddle.top - 20 < 0:
+            lPaddle.top -= cSpeed
+        if pong.y - rPaddle.top - 20 > 0:
+            lPaddle.top += cSpeed
 
         if pong.y - rPaddle.top - 20 < 0:
             rPaddle.top -= cSpeed
