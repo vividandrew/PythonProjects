@@ -1,4 +1,4 @@
-import noise, pygame, sys, time, math, random
+import noise, pygame, sys, math, random
 from pygame.locals import *
 
 windowWidth = 400
@@ -15,6 +15,8 @@ maxParticle = 200
 FlowField = [0 for i in range(0, windowWidth/scale+1)]
 particles = [maxParticle]
 last_fps = 0
+dblbuff = [pygame.Surface((windowWidth, windowHeight)), pygame.Surface((windowWidth, windowHeight))]     #Creates the two surfaces for double buffer
+buff = 0
 
 
 
@@ -53,6 +55,8 @@ class Particle():
         self.Surf = pygame.Surface((self.width,self.height))
         self.Surf.set_alpha(5)
 
+        self.buff = buff
+
     # this changes the position of the object, called every frame
     def update(self):
         #print self.vel
@@ -90,9 +94,9 @@ class Particle():
 
 
 
-    def show(self):
+    def show(self, buff):
         #pygame.draw.ellipse(windowSurface, self.colour, self.rect)
-        windowSurface.blit(self.Surf,self.pos)
+        buff.blit(self.Surf,self.pos)
         #The line was to help with frame skipped pixels, but never gets that bad
         #pygame.draw.line(windowSurface, self.colour, self.pos, self.prevPos, self.width*3)
 
@@ -128,6 +132,8 @@ for i in range(0, maxParticle-1):
     particles.append(Particle())
 
 windowSurface.fill(WHITE)
+dblbuff[0].fill(WHITE)
+dblbuff[1].fill(WHITE)
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -160,13 +166,19 @@ while True:
         zOffset += 0.001
         #counter = 0
 
+    #Switches between the surface its displayed to
+    if buff == 0:
+        buff = 1
+    else:
+        buff = 0
+
     for x in range(0, len(particles)):
         particles[x].edge()
-        particles[x].show()
+        particles[x].show(dblbuff[buff])        #Calls for a surface to draw the objects to.
         particles[x].update()
         particles[x].follow(FlowField)
 
-    #windowSurface.blit(windowOverlay, (0, 0))
+    windowSurface.blit(dblbuff[buff], (0, 0))
 
     pygame.display.update()
     mainClock.tick()
