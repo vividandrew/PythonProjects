@@ -1,18 +1,22 @@
+#Python 3.6
+
 import noise, pygame, sys, math, random
 from pygame.locals import *
 
 windowWidth = 400
 windowHeight = 400
-xOffset = 0
-yOffset = 0
+xOffsetOrigin = random.randint(0,255)
+yOffsetOrigin = random.randint(0,255)
+xOffset = xOffsetOrigin
+yOffset = yOffsetOrigin
 zOffset = 0
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BLUE = (70, 70, 255)
-scale = 20
+scale = 40
 counter = 1
-maxParticle = 200
-FlowField = [0 for i in range(0, windowWidth/scale+1)]
+maxParticle = 100
+FlowField = [0 for i in range(0, int(windowWidth/scale) + 1)]
 particles = [maxParticle]
 last_fps = 0
 dblbuff = [pygame.Surface((windowWidth, windowHeight)), pygame.Surface((windowWidth, windowHeight))]     #Creates the two surfaces for double buffer
@@ -29,11 +33,11 @@ windowSurface = pygame.display.set_mode((windowWidth, windowHeight))
 windowOverlay.fill((255, 255, 255, 2))
 mainClock = pygame.time.Clock()
 
-for x in range(0,windowWidth/scale+1):
-    FlowField[x] = [0 for i in range(0, windowHeight/scale+1)]
+for x in range(0, int(windowWidth/scale) + 1):
+    FlowField[x] = [0 for i in range(0, int(windowWidth/scale) + 1)]
 
-for x in range(0, windowWidth/scale+1):
-    for y in range(0, windowWidth/scale+1):
+for x in range(0, int(windowWidth/scale) + 1):
+    for y in range(0, int(windowWidth/scale) + 1):
         FlowField[x][y] = [0 for i in range(0, 1)]
 
 
@@ -120,8 +124,8 @@ class Particle():
         y = int(self.pos[1]/scale)
 
         force = 0, 0
-        for w in range(0, windowWidth/scale+1):
-            for h in range(0, windowHeight/scale+1):
+        for w in range(0, int(windowWidth/scale) + 1):
+            for h in range(0, int(windowWidth/scale) + 1):
                 if x == w and y == h:
                     force = FlowField[w][h]
                     self.applyForce(force)
@@ -143,10 +147,10 @@ while True:
     counter += 1
     if counter > 0:
         #windowSurface.fill((25,25,255))
-        xOffset = 3540
-        for x in range(0, windowWidth/scale+1):
-            yOffset = 1348
-            for y in range(0, windowHeight/scale+1):
+        xOffset = xOffsetOrigin
+        for x in range(0, int(windowWidth/scale) + 1):
+            yOffset = yOffsetOrigin
+            for y in range(0, int(windowWidth/scale) + 1):
                 r = noise.pnoise3(xOffset, yOffset, zOffset)
                 #print r
                 r *= 360
@@ -185,5 +189,5 @@ while True:
 
     #This is commented out because its not needed, but it measures the fps
     if pygame.time.get_ticks() - last_fps > 1000:
-        print "FPS: ", mainClock.get_fps()
+        print ("FPS: " + str(mainClock.get_fps()))
         last_fps = pygame.time.get_ticks()
