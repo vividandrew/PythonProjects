@@ -1,8 +1,9 @@
-#!python3
-# Ver:0.01 Created by ~;;;;Forticz A.W.;;;;~
+#!PYTHON3
+# Ver:0.02
+# The script gets slow when it comes to typing the team names potentially due to the constant listening to key events
+# otherwise script is functional
 
 import pyHook, pythoncom
-from subprocess import call
 
 # initialize the variables
 T1S = 0
@@ -64,15 +65,18 @@ def update(team1, T1S, team2, T2S):
     ScoreBoard.close()
 
 
-# Event executed every time the keyboard is pressed.
+# Event executed every time the keyboard is pressed.  
+    
 def OnKeyboardEvent(event):
+    
     # calls the global variable to be used locally and stored globally.
     global T1S
     global T2S
     global team1
     global team2
+    
     keypressed = event.Key
-    print keypressed
+    #print keypressed
     if keypressed == "F9":
         T1S += 1
         update(team1, T1S, team2, T2S)
@@ -81,9 +85,9 @@ def OnKeyboardEvent(event):
         update(team1, T1S, team2, T2S)
     if keypressed == "F11":
         print("Enter Team/Player 1")
-        team1 = raw_input()
+        team1 = input()
         print("Enter Team/Player 2")
-        team2 = raw_input()
+        team2 = input()
         T1S = 0
         T2S = 0
         print("""
@@ -92,9 +96,9 @@ Controls;
 2. press F10 to increase %s points
 3. press F11 to reset
 			""" % (team1, team2))
-        update(team1, T1S, team2, T2S)
-
-    # return True to pass the event to other handlers
+        update(team1, T1S, team2, T2S) 
+    
+    # return True to pass the event to other handlers within pyhook
     return True
 
 
@@ -106,3 +110,4 @@ hm.KeyDown = OnKeyboardEvent
 hm.HookKeyboard()
 # Wait forever
 pythoncom.PumpMessages()
+    
