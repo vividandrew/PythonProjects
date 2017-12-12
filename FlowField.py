@@ -185,7 +185,7 @@ while True:
     windowSurface.blit(dblbuff[buff], (0, 0))
 
     pygame.display.update()
-    mainClock.tick()
+    mainClock.tick(60)
 
     #This is commented out because its not needed, but it measures the fps
     if pygame.time.get_ticks() - last_fps > 1000:
